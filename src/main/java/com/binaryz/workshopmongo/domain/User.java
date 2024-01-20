@@ -1,15 +1,21 @@
 package com.binaryz.workshopmongo.domain;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Objects;
 
-
+@Document(collection="user") /* defines the collection name that'll be used on MongoDB settled database
+the collection default name is the class on lowcase */
 public class User implements Serializable {
 
-    @Serial
+    @Serial // defines this attribute as Serial
     private static final long SerialVersionUID = 1L;
 
+    @Id // defines this attribute as ID
     private String id;
     private String name;
     private String email;
