@@ -24,8 +24,15 @@ public class UserResource {
         List<UserDTO> listDTOUsers = listUsers.stream().map(x -> new UserDTO(x)).collect(Collectors.toList()); /*Get the listUsers to a stream
          then get each User object from the list and convert into an UserDTO object, so collect all this new objects and use all them to
          form a new UserDTO list*/
-        return ResponseEntity.ok().body(listDTOUsers); // return http and list as body.
+        return ResponseEntity.ok().body(listDTOUsers); // return http status and a list of DTO users as body.
     }
+
+    @GetMapping(value="/{id}")
+    public ResponseEntity<UserDTO> findById(@PathVariable String id){ // Get user id sent on URL
+        User obj = userService.findById(id);
+        return ResponseEntity.ok().body(new UserDTO(obj)); // return http status and an UserDTO as body.
+    }
+
 
 
 }
