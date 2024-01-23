@@ -49,6 +49,15 @@ public class UserResource {
         return ResponseEntity.noContent().build();
     }
 
+    @PutMapping(value="{id}")
+    public ResponseEntity<Void> update(@RequestBody UserDTO objDto, @PathVariable String id){ // Get user id sent on URL
+        User obj = userService.fromDTO(objDto);
+        obj.setId(id);
+        obj = userService.update(obj);
+        return ResponseEntity.noContent().build(); // return 204 http status
+
+    }
+
 
 
 
