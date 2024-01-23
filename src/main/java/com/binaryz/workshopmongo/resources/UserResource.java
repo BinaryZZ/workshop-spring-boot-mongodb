@@ -6,7 +6,9 @@ import com.binaryz.workshopmongo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,13 +26,21 @@ public class UserResource {
         List<UserDTO> listDTOUsers = listUsers.stream().map(x -> new UserDTO(x)).collect(Collectors.toList()); /*Get the listUsers to a stream
          then get each User object from the list and convert into an UserDTO object, so collect all this new objects and use all them to
          form a new UserDTO list*/
-        return ResponseEntity.ok().body(listDTOUsers); // return http status and a list of DTO users as body.
+        return ResponseEntity.ok().body(listDTOUsers); // return 200 http status and a list of DTO users as body.
     }
 
     @GetMapping(value="/{id}")
     public ResponseEntity<UserDTO> findById(@PathVariable String id){ // Get user id sent on URL
         User obj = userService.findById(id);
-        return ResponseEntity.ok().body(new UserDTO(obj)); // return http status and an UserDTO as body.
+        return ResponseEntity.ok().body(new UserDTO(obj)); // return 200 http status and an UserDTO as body.
+    }
+
+    @PostMapping
+    public ResponseEntity<Void> insert(@RequestBody UserDTO objDto){ // Get user id sent on URL
+        User obj = userService.fromDTO(objDto);
+        obj = userService.insert(obj);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+        return ResponseEntity.created(uri).build(); // return 201 http status using created.
     }
 
 
