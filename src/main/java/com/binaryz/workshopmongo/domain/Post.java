@@ -64,7 +64,13 @@ public class Post implements Serializable {
         this.body = body;
     }
 
+    public AuthorDTO getAuthor() {
+        return author;
+    }
 
+    public void setAuthor(AuthorDTO author) {
+        this.author = author;
+    }
 
     @Override
     public boolean equals(Object o) {

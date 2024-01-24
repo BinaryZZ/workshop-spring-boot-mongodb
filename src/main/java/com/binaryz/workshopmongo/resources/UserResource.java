@@ -44,13 +44,13 @@ public class UserResource {
         return ResponseEntity.created(uri).build(); // return 201 http status using created.
     }
 
-    @DeleteMapping(value="{id}")
+    @DeleteMapping(value="/{id}")
     public ResponseEntity<Void> delete(@PathVariable String id) {
         userService.delete(id);
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping(value="{id}")
+    @PutMapping(value="/{id}")
     public ResponseEntity<Void> update(@RequestBody UserDTO objDto, @PathVariable String id){ // Get user id sent on URL
         User obj = userService.fromDTO(objDto);
         obj.setId(id);
