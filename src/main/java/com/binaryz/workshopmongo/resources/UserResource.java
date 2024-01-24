@@ -1,5 +1,6 @@
 package com.binaryz.workshopmongo.resources;
 
+import com.binaryz.workshopmongo.domain.Post;
 import com.binaryz.workshopmongo.domain.User;
 import com.binaryz.workshopmongo.dto.UserDTO;
 import com.binaryz.workshopmongo.services.UserService;
@@ -55,7 +56,12 @@ public class UserResource {
         obj.setId(id);
         obj = userService.update(obj);
         return ResponseEntity.noContent().build(); // return 204 http status
+    }
 
+    @GetMapping(value="/{id}/posts")
+    public ResponseEntity<List<Post>> findPosts(@PathVariable String id){ // Get user id sent on URL
+        User obj = userService.findById(id);
+        return ResponseEntity.ok().body(obj.getPosts()); // return 200 http status and the posts from searched id.
     }
 
 
